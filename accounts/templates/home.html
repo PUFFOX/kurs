@@ -1,0 +1,11 @@
+<h2>Головна сторінка</h2>
+
+{% if user.is_authenticated %}
+  <p>Привіт, {{ user.username }}!</p>
+  <a href="{% url 'logout' %}">Вийти</a>
+{% else %}
+  <p>Ти не увійшов.</p>
+  <a href="{% url 'login' %}">Увійти</a> |
+  <a href="{% url 'register' %}">Реєстрація</a>
+{% endif %}
+<p>Це головна сторінка вашого веб-сайту.</p>

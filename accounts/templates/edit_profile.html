@@ -1,0 +1,32 @@
+<h2>Редагування профілю</h2>
+
+<form method="post">
+  {% csrf_token %}
+
+  <label>Ім'я:</label><br>
+  <input type="text" name="first_name" value="{{ request.user.first_name }}"><br><br>
+
+  <label>Прізвище:</label><br>
+  <input type="text" name="last_name" value="{{ request.user.last_name }}"><br><br>
+
+  <label>Email:</label><br>
+  <input type="email" name="email" value="{{ request.user.email }}"><br><br>
+
+  <button type="submit">Зберегти</button>
+</form>
+
+{% if messages %}
+  {% for message in messages %}
+    <p style="color:green;">{{ message }}</p>
+  {% endfor %}
+{% endif %}
+
+<a href="{% url 'dashboard' %}">← Назад до кабінету</a>
+
+
+{% if user.profile.image %}
+  <h3>Зображення профілю:</h3>
+  <img src="{{ user.profile.image.url }}" alt="Profile Image" style="width: 150px; height: 150px;">
+{% else %}
+  <p>Зображення профілю не встановлено.</p>
+{% endif %}
