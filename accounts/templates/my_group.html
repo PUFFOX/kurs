@@ -1,0 +1,37 @@
+{% extends "base.html" %}  {# Наслідуємо базовий шаблон #}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя група</title>
+</head>
+<body>
+
+    <h1>Моя група</h1>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Прізвище</th>
+            <th>Ім’я</th>
+            <th>Перегляд</th>
+        </tr>
+
+        {% for kursant in kursants %}
+        <tr>
+            <td>{{ kursant.last_name }}</td>
+            <td>{{ kursant.first_name }}</td>
+            <td><a href="{% url 'kursant_detail' kursant.user.id %}">Переглянути</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Немає курсантів у групі</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
+{% endblock %}

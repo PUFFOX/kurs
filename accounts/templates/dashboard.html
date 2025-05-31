@@ -1,47 +1,69 @@
-<h2>Особистий кабінет</h2>
-<p>Ласкаво просимо до вашого особистого кабінету!</p>
 
-<p>Ваша роль: <strong>{{ role }}</strong></p>
+{% extends "base.html" %}
 
-{% if role == "курсант" %}
-  <p>Ви курсант. Тут буде ваші оцінки та рейтинг.</p>
-{% elif role == "журналіст" %}
-  <p>Ви журналіст. Ви можете додавати записи та оцінки.</p>
-{% elif role == "командир" %}
-  <p>Ви командир. Ви бачите своїх підлеглих.</p>
-{% elif role == "начальник" %}
-  <p>Ви начальник. Ви керуєте всім курсом.</p>
-{% else %}
-  <p>Ваша роль не визначена.</p>
-{% endif %}
+{% block title %}Особистий кабінет{% endblock %}
+{% block content %}
+
+
 
 <h2>Особистий кабінет</h2>
-<p>Ласкаво просимо до вашого особистого кабінету!</p>
-<p><a href="{% url 'edit_profile' %}">Редагувати профіль</a></p>
-
+<p>Ласкаво просимо <strong>{{ user.username }}</strong> до вашого особистого кабінету!</p>
 
 {% if user.profile.image %}
   <img src="{{ user.profile.image.url }}" alt="Profile Image" style="width: 150px; height: 150px;">
 {% else %}
   <p>Зображення профілю не встановлено.</p>
 {% endif %}
-<p>Ваше ім'я: <strong>{{ user.username }}</strong></p>
 
-<p>Ваш email: <strong>{{ user.email }}</strong></p>
-<p>Дата реєстрації: <strong>{{ user.date_joined }}</strong></p>
-<p>Останній вхід: <strong>{{ user.last_login }}</strong></p>
+<p>Ваша роль: <strong>{{ role }}</strong></p>
+
+{% if role == "Курсант" %}
+  <p>Ви курсант. Тут буде ваші оцінки та рейтинг.</p>
+{% elif role == "Журналіст" %}
+  <p>Ви журналіст. Ви можете додавати записи та оцінки.</p>
+{% elif role == "Командир" %}
+  <p>Ви командир. Ви бачите своїх підлеглих.</p>
+{% elif role == "Начальник" %}
+  <p>Ви начальник. Ви керуєте всім курсом.</p>
+{% else %}
+  <p>Ваша роль не визначена.</p>
+{% endif %}
+
+
+
 <p>Ваш ID: <strong>{{ user.id }}</strong></p>
 <p>Ваше ім'я: <strong>{{ user.first_name }}</strong></p>
 <p>Ваше прізвище: <strong>{{ user.last_name }}</strong></p>
-<p>Ваше ім'я користувача: <strong>{{ user.username }}</strong></p>
+<p>Ваш email: <strong>{{ user.email }}</strong></p>
+
+{% if user.profile.group %}
+    <p>Ваша група: {{ user.profile.group.number }}</p>
+{% else %}
+    <p>Групу не вказано</p>
+{% endif %}
 
 
+<!--<p>Ваше ім'я користувача: <strong>{{ user.username }}</strong></p> -->
+
+<p>Дата реєстрації: <strong>{{ user.date_joined }}</strong></p>
+<p>Останній вхід: <strong>{{ user.last_login }}</strong></p>
+
+
+{% if role == "Журналіст" or role == "Командир" %}
+    <p><a href="{% url 'my_group' %}">Моя група</a></p>
+{% endif %}
+<p><a href="{% url 'kursant_detail' user.id %}">Переглянути деталі профілю</a></p>
+ 
+
+
+<p><a href="{% url 'edit_profile' %}">Редагувати профіль</a></p>
 
 {% if user.is_authenticated %}
-  <p>Ви увійшли як <strong>{{ user.username }}</strong>.</p>
   <a href="{% url 'logout' %}">Вийти</a>
 {% else %}
   <p>Ви не увійшли.</p>
   <a href="{% url 'login' %}">Увійти</a> |
   <a href="{% url 'register' %}">Реєстрація</a>
 {% endif %}
+
+{% endblock %}

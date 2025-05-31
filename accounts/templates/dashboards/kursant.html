@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>👨‍🎓 Кабінет курсанта</h2>
+<p>Тут ваші оцінки та рейтинг:</p>
+
+<hr>
+
+<h3>👤 Інформація про акаунт:</h3>
+<ul>
+    <li><strong>Ім'я користувача:</strong> {{ user.username }}</li>
+    <li><strong>Email:</strong> {{ user.email }}</li>
+    <li><strong>Ім’я:</strong> {{ user.first_name }}</li>
+    <li><strong>Прізвище:</strong> {{ user.last_name }}</li>
+    <li><strong>ID користувача:</strong> {{ user.id }}</li>
+    <li><strong>Дата реєстрації:</strong> {{ user.date_joined }}</li>
+    <li><strong>Останній вхід:</strong> {{ user.last_login }}</li>
+    <li><strong>Ваша роль:</strong> {{ role }}</li>
+</ul>
+
+{% if user.profile %}
+<h3>📘 Профіль:</h3>
+<ul>
+    <li><strong>Група:</strong> {{ user.profile.group.number }}</li>
+    <li><strong>Ім’я (з профілю):</strong> {{ user.profile.first_name }}</li>
+    <li><strong>Прізвище (з профілю):</strong> {{ user.profile.last_name }}</li>
+    {% if user.profile.image %}
+        <li><img src="{{ user.profile.image.url }}" alt="Фото профілю" style="width: 150px;"></li>
+    {% else %}
+        <li>Фото профілю не встановлено.</li>
+    {% endif %}
+</ul>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Інформація про курсанта</h2>
+<p><strong>Логін:</strong> {{ user_obj.username }}</p>
+<p><strong>Ім’я:</strong> {{ profile.first_name }}</p>
+<p><strong>Прізвище:</strong> {{ profile.last_name }}</p>
+<p><strong>Група:</strong> {{ profile.group.number }}</p>
+<a href="{% url 'my_group' %}">← Назад до списку групи</a>
+{% endblock %}
